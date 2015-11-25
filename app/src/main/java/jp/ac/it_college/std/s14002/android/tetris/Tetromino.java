@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,14 +17,8 @@ import java.util.Random;
  * Created by s14002 on 15/11/12.
  */
 public class Tetromino {
-    private static Paint paint = new Paint();
     private static final HashMap<Orientation, Orientation> CLOCKWISE_ROTATIONS;
-    private Board board;
-    private Coordinate base;
-    private Type type;
-    private Orientation orientation;
-    private Coordinate[] blockBoardCoordinates = Coordinate.asArray(0, 0, 0, 0, 0, 0, 0, 0, 0);
-    private RectF dst = new RectF();
+    private static Paint paint = new Paint();
 
     static {
         CLOCKWISE_ROTATIONS = new HashMap<>();
@@ -33,6 +28,12 @@ public class Tetromino {
         CLOCKWISE_ROTATIONS.put(Orientation.Up, Orientation.Right);
     }
 
+    private Board board;
+    private Coordinate base;
+    private Type type;
+    private Orientation orientation;
+    private Coordinate[] blockBoardCoordinates = Coordinate.asArray(0, 0, 0, 0, 0, 0, 0, 0, 0);
+    private RectF dst = new RectF();
 
 
     public Tetromino(Board board) {
@@ -73,7 +74,7 @@ public class Tetromino {
                 base.x -= 1;
                 break;
             case Rotate:
-                rotate(true);
+                rotate();
                 break;
         }
         calcBlockBoardCoordinates();
@@ -100,7 +101,7 @@ public class Tetromino {
     }
 
     public boolean intersect(Tetromino target) {
-        for (Coordinate blockCoordinate: blockBoardCoordinates) {
+        for (Coordinate blockCoordinate : blockBoardCoordinates) {
             for (Coordinate targetBlockCoordinate : target.blockBoardCoordinates) {
                 if (blockCoordinate.x == targetBlockCoordinate.x
                         && blockCoordinate.y == targetBlockCoordinate.y) {
@@ -112,7 +113,7 @@ public class Tetromino {
     }
 
     public boolean isOutOfBounds() {
-        for (Coordinate blockCoordinate: blockBoardCoordinates) {
+        for (Coordinate blockCoordinate : blockBoardCoordinates) {
             if (blockCoordinate.x < 0 || blockCoordinate.x >= 20
                     || blockCoordinate.y < 0) {
                 return true;
@@ -121,12 +122,51 @@ public class Tetromino {
         return false;
     }
 
+    public Coordinate[] getCoordinates() {
+        return blockBoardCoordinates;
+    }
+
+    public int clearRowAndAdjustDown(int row) {
+        ArrayList<Coordinate> newCoodinates = new ArrayList<>();
+        for (Coordinate coordinate : blockBoardCoordinates) {
+            if (coordinate.y > row) {
+                newCoodinates.add(new Coordinate(coordinate.x, coordinate.y - 1));
+            }
+            if (coordinate.y < row) {
+                newCoodinates.add(coordinate);
+            }
+        }
+        blockBoardCoordinates = newCoodinates.toArray(new Coordinate[newCoodinates.size()]);
+        return blockBoardCoordinates.length;
+    }
+
+    public void undo(Input input) {
+        switch (input) {
+            case Up:
+                base.y -= 1;
+                break;
+            case Down:
+                base.y += 1;
+                break;
+            case Right:
+                base.x -= 1;
+                break;
+            case Left:
+                base.x += 1;
+                break;
+            case Rotate:
+                rotate(true);
+                break;
+        }
+        calcBlockBoardCoordinates();
+    }
+
     public enum Orientation {
         Right, Down, Left, Up,;
     }
 
     public enum Type {
-        I(1), O(2), S(3), Z(4), J(5), L(6), T(7), ;
+        I(1), O(2), S(3), Z(4), J(5), L(6), T(7),;
 
         private static final Map<Type, Map<Orientation, Coordinate[]>> LOCAL_BLOCK_COORDINATES;
         private static final int SHUFFLE_COUNT = 100;
