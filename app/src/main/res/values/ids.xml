@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fall" type="id" />
+    <item name="left" type="id" />
+    <item name="right" type="id" />
+    <item name="rotate" type="id" />
+</resources>
