@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
         }
     }
 
+
+
     @Override
     public void scoreAdd(final int score) {
         handler.post(new Runnable() {

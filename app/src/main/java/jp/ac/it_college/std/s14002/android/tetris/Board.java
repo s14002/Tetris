@@ -19,14 +19,14 @@ import java.util.List;
  * Created by s14002 on 15/11/11.
  */
 public class Board extends SurfaceView implements SurfaceHolder.Callback {
-    public static final int FPS = 30;
+    public static final int FPS = 60;
     private SurfaceHolder holder;
     private DrawThread thread;
+    private Callback callback;
     private Bitmap blocks;
     private Tetromino fallingTetromino;
     private ArrayList<Tetromino> tetrominoList = new ArrayList<>();
     private long count = 0;
-    private Callback callback;
 
 
     public Board(Context context) {
@@ -57,14 +57,14 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     public boolean fallTetromino() {
         fallingTetromino.move(Input.Down);
-        if (isVoidPosition()) {
-            fallingTetromino.move(Input.Down);
+        if (!isValidPosition()) {
+            fallingTetromino.undo(Input.Down);
             return false;
         }
         return true;
     }
 
-    public boolean isVoidPosition() {
+    public boolean isValidPosition() {
         boolean overlapping = false;
         for (Tetromino fixedTetromino : tetrominoList) {
             if (fallingTetromino.intersect(fixedTetromino)) {
@@ -154,7 +154,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     public void send(Input input) {
         fallingTetromino.move(input);
-        if (isVoidPosition()) {
+        if (!isValidPosition()) {
             fallingTetromino.undo(input);
         } else if (input == Input.Down) {
             count = 0;

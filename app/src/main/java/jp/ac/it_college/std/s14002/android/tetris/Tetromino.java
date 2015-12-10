@@ -114,8 +114,8 @@ public class Tetromino {
 
     public boolean isOutOfBounds() {
         for (Coordinate blockCoordinate : blockBoardCoordinates) {
-            if (blockCoordinate.x < 0 || blockCoordinate.x >= 20
-                    || blockCoordinate.y < 0) {
+            if (blockCoordinate.x < 0 || blockCoordinate.x >= 10
+                    || blockCoordinate.y <= 0) {
                 return true;
             }
         }
