@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -24,6 +24,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
     private DrawThread thread;
     private Callback callback;
     private Bitmap blocks;
+    private Bitmap background;
     private Tetromino fallingTetromino;
     private ArrayList<Tetromino> tetrominoList = new ArrayList<>();
     private long count = 0;
@@ -46,6 +47,8 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     private void initialize(Context context) {
         getHolder().addCallback(this);
+
+        background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         blocks = BitmapFactory.decodeResource(context.getResources(), R.drawable.block);
         spawnTetromino();
     }
@@ -113,6 +116,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
         this.holder = holder;
         startThread();
     }
@@ -144,7 +148,13 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
         }
         updateGame();
 
-        canvas.drawColor(Color.LTGRAY); // 画面クリア（単色塗りつぶし）
+        Paint paint = new Paint();
+
+        // 描画処理
+        canvas.drawBitmap(background, 0, 0, paint);
+
+//        canvas.drawColor(Color.LTGRAY); // 画面クリア（単色塗りつぶし）
+
 
         for (Tetromino tetromino : tetrominoList) {
             tetromino.draw(canvas);

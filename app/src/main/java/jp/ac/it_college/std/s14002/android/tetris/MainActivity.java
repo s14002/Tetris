@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
         Bitmap srcImage = BitmapFactory.decodeResource(getResources(),
                 android.R.drawable.ic_media_play);
         Matrix matrix = new Matrix();
+
         matrix.postRotate(90);
         Bitmap fallImage = Bitmap.createBitmap(srcImage,0, 0,
                 srcImage.getWidth(), srcImage.getHeight(),matrix, true);

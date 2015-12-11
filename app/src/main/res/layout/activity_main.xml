@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <FrameLayout
 
@@ -16,13 +17,15 @@
         android:layout_height="480dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#ccc">
+        android:background="@drawable/background"
+        >
 
 
         <jp.ac.it_college.std.s14002.android.tetris.Board
             android:id="@+id/board"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+             />
     </FrameLayout>
 
     <TextView
