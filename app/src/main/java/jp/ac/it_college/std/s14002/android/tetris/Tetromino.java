@@ -76,6 +76,9 @@ public class Tetromino {
             case Rotate:
                 rotate();
                 break;
+ /*           case Keep:
+                keep();
+                break;*/
         }
         calcBlockBoardCoordinates();
     }
@@ -92,6 +95,14 @@ public class Tetromino {
         }
         calcBlockBoardCoordinates();
     }
+
+   /* public void keep() {
+        keep(false);
+    }
+
+    public void keep(boolean is) {
+        if ()
+    }*/
 
     public void draw(Canvas canvas) {
         for (Coordinate point : blockBoardCoordinates) {
@@ -157,6 +168,8 @@ public class Tetromino {
             case Rotate:
                 rotate(true);
                 break;
+         /*   case Keep:
+                keep(true);*/
         }
         calcBlockBoardCoordinates();
     }
@@ -172,6 +185,7 @@ public class Tetromino {
         private static final int SHUFFLE_COUNT = 100;
         private static Bitmap blockBitmap = null;
         private static LinkedList<Type> queue = new LinkedList<>();
+        private static LinkedList<Type> keepQueue = new LinkedList<>(); // Keepのキュー
         private static Random random = new Random();
         private static Map<Type, Rect> blockRect = new HashMap<>();
 
@@ -257,6 +271,10 @@ public class Tetromino {
                 queue.set(src, queue.get(dst));
                 queue.set(dst, tmp);
             }
+        }
+
+        public static void setKeepQueue() {
+
         }
 
         public static boolean isBitmapinitialized() {

@@ -7,8 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    >
+    tools:context=".MainActivity">
 
     <FrameLayout
 
@@ -17,22 +16,37 @@
         android:layout_height="480dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/background"
-        >
+        android:background="@drawable/background">
 
 
         <jp.ac.it_college.std.s14002.android.tetris.Board
             android:id="@+id/board"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
+            android:layout_height="match_parent" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/keep_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/board_area"
+        android:layout_toRightOf="@+id/board_area"
+        android:text="@string/keep"
+        android:textColor="#000"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:id="@+id/keep_box"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_below="@+id/keep_label"
+        android:layout_toRightOf="@+id/board_area" />
 
     <TextView
         android:id="@+id/score_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/board_area"
+        android:layout_below="@+id/keep_box"
         android:layout_toRightOf="@+id/board_area"
         android:text="@string/score"
         android:textColor="#000"
@@ -49,6 +63,7 @@
         android:textColor="#000"
         android:textSize="20sp" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,7 +71,7 @@
         android:layout_below="@+id/board_area"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <ImageButton
             android:id="@+id/left"
@@ -93,6 +108,16 @@
             android:onClick="gameButtonClick"
             android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_rotate" />
+
+        <ImageButton
+            android:id="@+id/ib_keep"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:onClick="gameButtonClick"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_menu_set_as" />
+
 
     </LinearLayout>
 
