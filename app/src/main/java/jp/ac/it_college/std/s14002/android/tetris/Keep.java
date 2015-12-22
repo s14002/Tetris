@@ -10,6 +10,7 @@ import android.view.SurfaceView;
  */
 public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
+    private Thread thread;
 
     public Keep(Context context) {
         super(context);
@@ -19,7 +20,9 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
-        startThread();
+        thread = new Thread();
+        thread.start();
+
     }
 
     @Override
@@ -32,23 +35,16 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    private void startThread() {
-        stopThread();
-
-       /* thread = new DrawThread();
-        thread.start();*/
-    }
-
-    private void stopThread() {
-      /*  if (thread != null) {
-            thread.isFinished = true;
-            thread = null;
-        }*/
-    }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        canvas = SurfaceHolder.lockCanvas();
+        if (canvas == null) {
+            return;
+        }
+        holder.unlockCanvasAndPost(canvas);
 
     }
 }
