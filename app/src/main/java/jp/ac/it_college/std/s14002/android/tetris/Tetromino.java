@@ -76,7 +76,7 @@ public class Tetromino {
             case Rotate:
                 rotate();
                 break;
- /*           case Keep:
+           /* case Keep:
                 keep();
                 break;*/
         }
@@ -98,9 +98,9 @@ public class Tetromino {
 
    /* public void keep() {
         keep(false);
-    }
+    }*/
 
-    public void keep(boolean is) {
+  /*  public void keep(boolean is) {
         if ()
     }*/
 
@@ -110,6 +110,7 @@ public class Tetromino {
             canvas.drawBitmap(Type.blockBitmap, type.getRect(), dst, paint);
         }
     }
+
 
     public boolean intersect(Tetromino target) {
         for (Coordinate blockCoordinate : blockBoardCoordinates) {
@@ -185,7 +186,7 @@ public class Tetromino {
         private static final int SHUFFLE_COUNT = 100;
         private static Bitmap blockBitmap = null;
         private static LinkedList<Type> queue = new LinkedList<>();
-        private static LinkedList<Type> keepQueue = new LinkedList<>(); // Keepのキュー
+//        private static LinkedList<Type> keepQueue = new LinkedList<>(); // Keepのキュー
         private static Random random = new Random();
         private static Map<Type, Rect> blockRect = new HashMap<>();
 
@@ -273,9 +274,9 @@ public class Tetromino {
             }
         }
 
-        public static void setKeepQueue() {
+    /*    public static void setKeepQueue() {
 
-        }
+        }*/
 
         public static boolean isBitmapinitialized() {
             return blockBitmap != null;

@@ -3,9 +3,9 @@ package jp.ac.it_college.std.s14002.android.tetris;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
         Matrix matrix = new Matrix();
 
         matrix.postRotate(90);
-        Bitmap fallImage = Bitmap.createBitmap(srcImage,0, 0,
-                srcImage.getWidth(), srcImage.getHeight(),matrix, true);
+        Bitmap fallImage = Bitmap.createBitmap(srcImage, 0, 0,
+                srcImage.getWidth(), srcImage.getHeight(), matrix, true);
         ((ImageButton) findViewById(R.id.fall)).setImageBitmap(fallImage);
 
         matrix.postRotate(90);
@@ -34,8 +34,12 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
                 srcImage.getWidth(), srcImage.getHeight(), matrix, true);
         ((ImageButton) findViewById(R.id.left)).setImageBitmap(leftImage);
 
-        board = (Board)findViewById(R.id.board);
+        board = (Board) findViewById(R.id.board);
         board.setCallback(this);
+
+//        keep = (Keep) findViewById(R.id.fl_keep);
+//        keep.setCallback(this);
+
     }
 
     public void gameButtonClick(View v) {
@@ -49,15 +53,14 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
             case R.id.fall:
                 board.send(Input.Down);
                 break;
-            case  R.id.rotate:
+            case R.id.rotate:
                 board.send(Input.Rotate);
                 break;
-           /* case R.id.keep:
+            case R.id.keep:
                 board.send(Input.Keep);
-                break;*/
+                break;
         }
     }
-
 
 
     @Override
