@@ -19,7 +19,7 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
-        statThread();
+        startThread();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    private void statThread() {
+    private void startThread() {
         stopThread();
 
        /* thread = new DrawThread();
@@ -49,6 +49,6 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        
+
     }
 }
