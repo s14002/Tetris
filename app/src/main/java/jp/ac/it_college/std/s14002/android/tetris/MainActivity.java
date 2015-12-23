@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
         board = (Board) findViewById(R.id.board);
         board.setCallback(this);
 
-//        keep = (Keep) findViewById(R.id.fl_keep);
-//        keep.setCallback(this);
-
     }
 
     public void gameButtonClick(View v) {
