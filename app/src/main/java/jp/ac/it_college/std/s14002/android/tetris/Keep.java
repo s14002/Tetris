@@ -3,6 +3,7 @@ package jp.ac.it_college.std.s14002.android.tetris;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,8 +16,23 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
 
     public Keep(Context context) {
         super(context);
+        initialize(context);
+//        getHolder().addCallback(this);
+//        holder = getHolder();
+    }
+
+    public Keep(Context context, AttributeSet attrs, int defStyleAttr, SurfaceHolder holder, Thread thread) {
+        super(context, attrs, defStyleAttr);
+        initialize(context);
+    }
+
+    public Keep(Context context, AttributeSet attrs, SurfaceHolder holder, Thread thread) {
+        super(context, attrs);
+        initialize(context);
+    }
+
+    private void initialize(Context context) {
         getHolder().addCallback(this);
-        holder = getHolder();
     }
 
     @Override
@@ -24,6 +40,9 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
         this.holder = holder;
         thread = new Thread();
         thread.start();
+        Canvas canvas = null;
+        canvas = holder.lockCanvas(null);
+        draw(canvas);
 
     }
 
