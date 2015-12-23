@@ -15,8 +15,7 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     private int FPS = 60;
     private SurfaceHolder holder;
     private DrawThread thread;
-    private Tetromino fallingTetromino;
-
+    
     public Keep(Context context) {
         super(context);
         initialize(context);
