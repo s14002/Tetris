@@ -21,12 +21,12 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
 //        holder = getHolder();
     }
 
-    public Keep(Context context, AttributeSet attrs, int defStyleAttr, SurfaceHolder holder, Thread thread) {
+    public Keep(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context);
     }
 
-    public Keep(Context context, AttributeSet attrs, SurfaceHolder holder, Thread thread) {
+    public Keep(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context);
     }
