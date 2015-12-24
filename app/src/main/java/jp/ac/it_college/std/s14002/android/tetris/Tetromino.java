@@ -29,6 +29,7 @@ public class Tetromino {
     }
 
     private Board board;
+    private Keep keep;
     private Coordinate base;
     private Type type;
     private Orientation orientation;
@@ -38,6 +39,14 @@ public class Tetromino {
 
     public Tetromino(Board board) {
         this.board = board;
+        base = new Coordinate(0, 0);
+        type = type.nextType();
+        orientation = Orientation.Right;
+        calcBlockBoardCoordinates();
+    }
+
+    public Tetromino(Keep keep) {
+        this.keep = keep;
         base = new Coordinate(0, 0);
         type = type.nextType();
         orientation = Orientation.Right;
