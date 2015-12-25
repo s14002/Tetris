@@ -29,7 +29,7 @@ public class Tetromino {
     }
 
     private Board board;
-    private Keep keep;
+//    private Keep keep;
     private Coordinate base;
     private Type type;
     private Orientation orientation;
@@ -45,6 +45,7 @@ public class Tetromino {
         calcBlockBoardCoordinates();
     }
 
+/*
     public Tetromino(Keep keep) {
         this.keep = keep;
         base = new Coordinate(0, 0);
@@ -52,6 +53,7 @@ public class Tetromino {
         orientation = Orientation.Right;
         calcBlockBoardCoordinates();
     }
+*/
 
     public void calcBlockBoardCoordinates() {
         Coordinate[] localCoordinates = type.getLocalBlockCoordinates(orientation);

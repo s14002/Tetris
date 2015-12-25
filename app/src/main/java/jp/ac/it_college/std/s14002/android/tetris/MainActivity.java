@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
             case R.id.rotate:
                 board.send(Input.Rotate);
                 break;
-            case R.id.keep:
-                board.send(Input.Keep);
-                break;
         }
     }
 
