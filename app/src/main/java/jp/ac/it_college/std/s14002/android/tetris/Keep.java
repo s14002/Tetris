@@ -1,46 +1,65 @@
 package jp.ac.it_college.std.s14002.android.tetris;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Created by s14002 on 15/11/11.
  */
+
 public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     private int FPS = 60;
+    public Tetromino fallingTetromino;
     private SurfaceHolder holder;
     private DrawThread thread;
-    private Tetromino fallingTetromino;
+    private Bitmap blocks;
+    private Callback callback;
+    private ArrayList<Tetromino> tetrominoList = new ArrayList<>();
+
 
     public Keep(Context context) {
         super(context);
         initialize(context);
-    }
 
+    }
 
     public Keep(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context);
+
     }
 
     public Keep(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context);
+
     }
 
     private void initialize(Context context) {
         getHolder().addCallback(this);
+        blocks = BitmapFactory.decodeResource(context.getResources(), R.drawable.block);
+        spawnTetromino();
+    }
+
+    private void spawnTetromino() {
+        fallingTetromino = new Tetromino(this);
+        fallingTetromino.setPosition(0, 0);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.holder = holder;
         startThread();
+
     }
 
     @Override
@@ -56,12 +75,20 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
         if (canvas == null) {
             return;
         }
-        canvas.drawColor(Color.MAGENTA);
-        fallingTetromino.draw(canvas);
+        if (!Tetromino.Type.isBitmapinitialized()) {
+            Tetromino.Type.setBlockBitmap(blocks);
+        }
+        for (Tetromino tetromino : tetrominoList) {
+            tetromino.draw(canvas);
+        }
+        getFallingTetromino();
+    }
+
+    public Tetromino getFallingTetromino() {
+        return fallingTetromino;
     }
 
     private void startThread() {
@@ -76,6 +103,13 @@ public class Keep extends SurfaceView implements SurfaceHolder.Callback {
             thread.isFinished = true;
             thread = null;
         }
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public interface Callback {
     }
 
     private class DrawThread extends Thread {
