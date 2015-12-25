@@ -29,7 +29,7 @@ public class Tetromino {
     }
 
     private Board board;
-//    private Keep keep;
+    private Keep keep;
     private Coordinate base;
     private Type type;
     private Orientation orientation;
@@ -68,6 +68,7 @@ public class Tetromino {
         base.x = x;
         base.y = y;
         calcBlockBoardCoordinates();
+        keep = new Keep(type.getId());
     }
 
     public void move(Input input) {
