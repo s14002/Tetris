@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -29,6 +30,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
     private ArrayList<Tetromino> tetrominoList = new ArrayList<>();
     private long count = 0;
     private Tetromino.Type type;
+    private int id;
 
 
     public Board(Context context) {
@@ -49,8 +51,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     private void initialize(Context context) {
         getHolder().addCallback(this);
-
-        background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
         blocks = BitmapFactory.decodeResource(context.getResources(), R.drawable.block);
         spawnTetromino();
     }
@@ -58,6 +59,10 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
     public void spawnTetromino() {
         fallingTetromino = new Tetromino(this);
         fallingTetromino.setPosition(5, 23);
+    }
+
+    public void sendId(int id) {
+        this.id = id;
     }
 
     public boolean fallTetromino() {
@@ -152,8 +157,11 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint paint = new Paint();
 
+
         // 背景画像の描画処理
-        canvas.drawBitmap(background, 0, 0, paint);
+       canvas.drawBitmap(background, 0, 0, paint);
+
+//        canvas.drawColor(Color.LTGRAY); // 画面クリア（単色塗りつぶし）
 
         for (Tetromino tetromino : tetrominoList) {
             tetromino.draw(canvas);
@@ -183,6 +191,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
             tetrominoList.add(fallingTetromino); //積み重なるようにする
             clearRows(findFullRows());  //ブロックが一行揃ったら消す
             spawnTetromino();
+            callback.stockId(id);
         }
     }
 
@@ -202,6 +211,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
     public interface Callback {
         void scoreAdd(int score);
+        void stockId(int id);
     }
 
     private class DrawThread extends Thread {

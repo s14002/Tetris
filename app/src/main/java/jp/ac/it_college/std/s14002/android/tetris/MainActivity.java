@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements Board.Callback {
     private Board board;
     private Handler handler;
+    private Tetromino.Type type;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,24 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
             case R.id.rotate:
                 board.send(Input.Rotate);
                 break;
+            case R.id.keep:
+                board.send(Input.Keep);
+                break;
         }
     }
 
+    public void stockId(final int id) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String m = String.valueOf(id);
+                Log.e("Log :", m);
+            }
+        });
+//        this.id = type.getId();
+//        String m = String.valueOf(id);
+//        Log.e("Log :", m);
+    }
 
     @Override
     public void scoreAdd(final int score) {

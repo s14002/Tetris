@@ -1,5 +1,6 @@
 package jp.ac.it_college.std.s14002.android.tetris;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 /**
@@ -18,4 +19,5 @@ public class Keep {
         String m = String.valueOf(id);
         Log.e("Log :", m);
     }
+
 }
