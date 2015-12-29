@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -14,6 +13,7 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,16 +21,17 @@ import java.util.List;
  */
 public class Board extends SurfaceView implements SurfaceHolder.Callback {
     public static final int FPS = 60;
+    public Tetromino fallingTetromino;
     private SurfaceHolder holder;
     private DrawThread thread;
     private Callback callback;
     private Bitmap blocks;
     private Bitmap background;
-    public Tetromino fallingTetromino;
     private ArrayList<Tetromino> tetrominoList = new ArrayList<>();
     private long count = 0;
     private Tetromino.Type type;
     private int id;
+    private LinkedList<Tetromino.Type> queue;
 
 
     public Board(Context context) {
@@ -56,14 +57,15 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
         spawnTetromino();
     }
 
+    public void sendId(int id) {
+        this.id = id;
+    }
+
     public void spawnTetromino() {
         fallingTetromino = new Tetromino(this);
         fallingTetromino.setPosition(5, 23);
     }
 
-    public void sendId(int id) {
-        this.id = id;
-    }
 
     public boolean fallTetromino() {
         fallingTetromino.move(Input.Down);
@@ -88,7 +90,7 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private List<Integer> findFullRows() {
-        int[] rowCounts = new int[22];
+        int[] rowCounts = new int[21];
         for (Tetromino fixedTetromino : tetrominoList) {
             for (Coordinate coordinate : fixedTetromino.getCoordinates()) {
                 rowCounts[coordinate.y]++;
@@ -102,6 +104,16 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
         }
         return list;
     }
+
+    public void getQueue(LinkedList<Tetromino.Type> queue) {
+        if (queue.size() != 0) {
+            String m = String.valueOf(queue.get(0));
+            Log.e("queue :", m);
+            this.queue = queue;
+        }
+    }
+
+
 
     private void clearRows(List<Integer> list) {
         callback.scoreAdd(list.size());
@@ -154,12 +166,11 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
 
         }
         updateGame();
-
         Paint paint = new Paint();
 
 
         // 背景画像の描画処理
-       canvas.drawBitmap(background, 0, 0, paint);
+        canvas.drawBitmap(background, 0, 0, paint);
 
 //        canvas.drawColor(Color.LTGRAY); // 画面クリア（単色塗りつぶし）
 
@@ -187,12 +198,14 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
             return;
         }
         count = 0;
+
         if (!fallTetromino()) {
             tetrominoList.add(fallingTetromino); //積み重なるようにする
             clearRows(findFullRows());  //ブロックが一行揃ったら消す
             spawnTetromino();
-            callback.stockId(id);
         }
+            callback.nextTetromino(queue);
+
     }
 
     private void startThread() {
@@ -210,8 +223,10 @@ public class Board extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public interface Callback {
+//        void stockId(int id);
         void scoreAdd(int score);
-        void stockId(int id);
+        void nextTetromino(LinkedList<Tetromino.Type> queue);
+
     }
 
     private class DrawThread extends Thread {

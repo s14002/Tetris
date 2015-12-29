@@ -12,11 +12,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
 public class MainActivity extends AppCompatActivity implements Board.Callback {
     private Board board;
     private Handler handler;
-    private Tetromino.Type type;
-    private int id;
+//    private Tetromino.Type type;
+//    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,46 +59,46 @@ public class MainActivity extends AppCompatActivity implements Board.Callback {
             case R.id.rotate:
                 board.send(Input.Rotate);
                 break;
-            case R.id.keep:
+          /*  case R.id.keep:
                 board.send(Input.Keep);
-                break;
+                break;*/
         }
     }
 
-    public void stockId(final int id) {
+    public void nextTetromino(final LinkedList<Tetromino.Type> queue) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                String message = String.valueOf(id);
-                ImageView imageView = (ImageView) findViewById(R.id.nextTetromino);
-                switch (id) {
-                    case 1:
-                        imageView.setImageResource(R.drawable.i_tetro);
-                        Log.e("Log :", message + ": case 1");
+                String message = String.valueOf(queue.get(0));
+                ImageView nextTetromino = (ImageView) findViewById(R.id.nextTetromino);
+                switch (message) {
+                    case "I":
+                        nextTetromino.setImageResource(R.drawable.i_tetro);
+                        Log.e("Log :", message + ": case I");
                         break;
-                    case 2:
-                        imageView.setImageResource(R.drawable.o_tetro);
-                        Log.e("Log :", message + ": case 2");
+                    case "O":
+                        nextTetromino.setImageResource(R.drawable.o_tetro);
+                        Log.e("Log :", message + ": case O");
                         break;
-                    case 3:
-                        imageView.setImageResource(R.drawable.s_tetro);
-                        Log.e("Log :", message + ": case 3");
+                    case "S":
+                        nextTetromino.setImageResource(R.drawable.s_tetro);
+                        Log.e("Log :", message + ": case S");
                         break;
-                    case 4:
-                        imageView.setImageResource(R.drawable.z_tetro);
-                        Log.e("Log :", message + ": case 4");
+                    case "Z":
+                        nextTetromino.setImageResource(R.drawable.z_tetro);
+                        Log.e("Log :", message + ": case Z");
                         break;
-                    case 5:
-                        imageView.setImageResource(R.drawable.l_tetro);
-                        Log.e("Log :", message + ": case 5");
+                    case "L":
+                        nextTetromino.setImageResource(R.drawable.l_tetro);
+                        Log.e("Log :", message + ": case L");
                         break;
-                    case 6:
-                        imageView.setImageResource(R.drawable.j_tetro);
-                        Log.e("Log :", message + ": case 6");
+                    case "J":
+                        nextTetromino.setImageResource(R.drawable.j_tetro);
+                        Log.e("Log :", message + ": case J");
                         break;
-                    case 7:
-                        imageView.setImageResource(R.drawable.t_tetro);
-                        Log.e("Log :", message + ": case 7");
+                    case "T":
+                        nextTetromino.setImageResource(R.drawable.t_tetro);
+                        Log.e("Log :", message + ": case T");
                         break;
                 }
 

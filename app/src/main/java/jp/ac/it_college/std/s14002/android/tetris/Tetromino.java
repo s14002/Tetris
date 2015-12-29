@@ -41,6 +41,7 @@ public class Tetromino {
         type = type.nextType();
         orientation = Orientation.Right;
         calcBlockBoardCoordinates();
+        nextQueue();
     }
 
 /*
@@ -66,7 +67,11 @@ public class Tetromino {
         base.x = x;
         base.y = y;
         calcBlockBoardCoordinates();
-        board.sendId(type.getId());
+//        board.sendId(type.getId());
+    }
+
+    public void nextQueue() {
+        board.getQueue(type.getQueue());
     }
 
     public void move(Input input) {
@@ -263,6 +268,7 @@ public class Tetromino {
 
         public static void generateQueue() {
             queue.addAll(Arrays.asList(I, O, S, Z, J, L, T));
+
             for (int i = 0; i < SHUFFLE_COUNT; i++) {
                 int src = random.nextInt(queue.size());
                 int dst = random.nextInt(queue.size());
@@ -276,6 +282,16 @@ public class Tetromino {
             return blockBitmap != null;
         }
 
+
+
+        public static LinkedList<Type> getQueue() {
+            return queue;
+        }
+
+        public static void setQueue(LinkedList<Type> queue) {
+            Type.queue = queue;
+        }
+
         public static void setBlockBitmap(Bitmap bitmap) {
             blockBitmap = bitmap;
             int side = blockBitmap.getWidth();
@@ -284,6 +300,7 @@ public class Tetromino {
             blockRect.put(S, new Rect(0, 2 * side, side, (2 + 1) * side));
             blockRect.put(Z, new Rect(0, 3 * side, side, (3 + 1) * side));
             blockRect.put(J, new Rect(0, 4 * side, side, (4 + 1) * side));
+
             blockRect.put(L, new Rect(0, 5 * side, side, (5 + 1) * side));
             blockRect.put(T, new Rect(0, 6 * side, side, (6 + 1) * side));
         }
